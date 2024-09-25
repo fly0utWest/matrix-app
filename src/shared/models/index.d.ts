@@ -2,13 +2,12 @@ export interface Tile {
     id: number;
     color: string;
     isFlipped: boolean;
-    matched: boolean;
+    isMatched: boolean;
 } 
 
 export interface GameState {
     tiles: Tile[];
     flippedTiles: Tile[];
-    matchedTiles: Tile[];
     isGameOver: boolean;
 }
 
