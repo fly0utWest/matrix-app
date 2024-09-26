@@ -20,13 +20,9 @@ const Board: React.FC = () => {
   )
   const isGameOver = useSelector((state: RootState) => state.game.isGameOver)
 
-  const [modalIsVisible, setModalIsVisible] = useState(true)
+  const [modalIsVisible, setModalIsVisible] = useState(false)
 
-  const handleModalBg = () => {
-    setModalIsVisible(false)
-  }
-
-  const handleModalButton = () => {
+  const handleModal = () => {
     setModalIsVisible(false)
     dispatch(resetGame())
   }
@@ -57,12 +53,14 @@ const Board: React.FC = () => {
 
   return (
     <>
-      {modalIsVisible &&
-        isGameOver &&
-        createPortal(
-          <WinModal onClickBg={handleModalBg} onClickButton={handleModalButton} />,
-          document.getElementById("root-modal") as HTMLElement,
-        )}
+      {modalIsVisible ||
+        (isGameOver &&
+          createPortal(
+            <WinModal
+              onClick={handleModal}
+            />,
+            document.getElementById("root-modal") as HTMLElement,
+          ))}
       <div className="w-full max-w-[768px] min-h-[75%] border-4 border-gray-500 rounded-lg bg-gray-400 p-2 shadow-gray-700 shadow-xl grid grid-cols-4 gap-3">
         {tiles.map(tile => (
           <Tile
@@ -75,7 +73,11 @@ const Board: React.FC = () => {
           />
         ))}
       </div>
-      <Button onClick={() => dispatch(resetGame())} caption={'Reset game'} modifiers="mt-6"/>
+      <Button
+        onClick={() => dispatch(resetGame())}
+        caption={"Reset game"}
+        modifiers="mt-6"
+      />
     </>
   )
 }
