@@ -11,10 +11,12 @@ import Tile from "../../shared/ui/Tile"
 import { createPortal } from "react-dom"
 import { WinModal } from "../WinModal"
 import { Button } from "../../shared/ui"
+import clsx from "clsx"
 
 const Board: React.FC = () => {
   const dispatch: AppDispatch = useDispatch()
   const tiles = useSelector((state: RootState) => state.game.tiles)
+  const gameMode = useSelector((state: RootState) => state.game.gameMode)
   const flippedTiles = useSelector(
     (state: RootState) => state.game.flippedTiles,
   )
@@ -56,12 +58,19 @@ const Board: React.FC = () => {
       {modalIsVisible ||
         (isGameOver &&
           createPortal(
-            <WinModal
-              onClick={handleModal}
-            />,
+            <WinModal onClick={handleModal} />,
             document.getElementById("root-modal") as HTMLElement,
           ))}
-      <div className="w-full max-w-[768px] min-h-[75%] border-4 border-gray-500 rounded-lg bg-gray-400 p-2 shadow-gray-700 shadow-xl grid grid-cols-4 gap-3">
+      <div
+        className={clsx(
+          "w-full max-w-[768px] min-h-[75%] border-4 border-gray-500 rounded-lg bg-gray-400 p-2 shadow-gray-700 shadow-xl grid gap-3",
+          {
+            "grid-cols-2": gameMode === 1,
+            "grid-cols-4": gameMode === 2,
+            "grid-cols-8": gameMode === 3,
+          },
+        )}
+      >
         {tiles.map(tile => (
           <Tile
             key={tile.id}
@@ -76,7 +85,7 @@ const Board: React.FC = () => {
       <Button
         onClick={() => dispatch(resetGame())}
         caption={"Reset game"}
-        modifiers="mt-6"
+        modifiers="mt-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:bg-gray-300"
       />
     </>
   )

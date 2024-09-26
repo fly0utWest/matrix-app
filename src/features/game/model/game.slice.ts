@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Tile, GameState } from '../../../shared/models';
+import { Tile, GameState, GameModes } from '../../../shared/models';
 import { createTiles } from '../lib/createTiles';
 import { isTileValid } from '../../../shared/lib';
 
@@ -7,6 +7,7 @@ const initialState: GameState = {
   tiles: [],
   flippedTiles: [],
   isGameOver: false,
+  gameMode: GameModes.QUADRO
 };
 
 const gameSlice = createSlice({
@@ -14,7 +15,7 @@ const gameSlice = createSlice({
   initialState,
   reducers: {
     resetGame(state) {
-      state.tiles = createTiles(2);
+      state.tiles = createTiles(state.gameMode);
       state.flippedTiles = [];
       state.isGameOver = false;
     },
@@ -53,6 +54,9 @@ const gameSlice = createSlice({
       if (state.tiles.every(t => t.isMatched === true)) {
         state.isGameOver = true;
       }
+    },
+    changeGameMode(state, action: PayloadAction<GameModes>) {
+      state.gameMode = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -76,5 +80,5 @@ export const resetFlippedTilesAsync = createAsyncThunk<void, void, { state: { ga
   );
   
 
-export const { resetGame, flipTile, flipBackTile, clearFlippedTiles, matchTiles } = gameSlice.actions;
+export const { resetGame, flipTile, flipBackTile, clearFlippedTiles, matchTiles, changeGameMode } = gameSlice.actions;
 export default gameSlice.reducer;

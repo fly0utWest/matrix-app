@@ -1,7 +1,7 @@
-import { Tile } from "../../../shared/models"
+import { GameModes, Tile } from "../../../shared/models"
 import { multiplyArray, shuffleArray } from "../../../shared/lib"
 
-export const createTiles = (multiplier: number): Tile[] => {
+export const createTiles = (gameMode: GameModes): Tile[] => {
   const colors: string[] = [
     "bg-red-500",
     "bg-blue-500",
@@ -13,7 +13,7 @@ export const createTiles = (multiplier: number): Tile[] => {
     "bg-orange-500",
   ]
 
-  const multipliedArray = multiplyArray(colors, 2)
+  const multipliedArray = multiplyArray(colors, gameMode)
 
   return shuffleArray(
     multipliedArray.map((color, index) => ({
