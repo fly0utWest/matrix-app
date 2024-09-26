@@ -65,7 +65,7 @@ const Board: React.FC = () => {
         className={clsx(
           "w-full max-w-[768px] min-h-[75%] border-4 border-gray-500 rounded-lg bg-gray-400 p-2 shadow-gray-700 shadow-xl grid gap-3",
           {
-            "grid-cols-2": gameMode === 1,
+            "grid-cols-2 gap-8": gameMode === 1,
             "grid-cols-4": gameMode === 2,
             "grid-cols-8": gameMode === 3,
           },
