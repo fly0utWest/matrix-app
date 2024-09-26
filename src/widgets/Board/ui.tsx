@@ -85,7 +85,7 @@ const Board: React.FC = () => {
       <Button
         onClick={() => dispatch(resetGame())}
         caption={"Reset game"}
-        modifiers="mt-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:bg-gray-300"
+        modifiers="my-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:bg-gray-300"
       />
     </>
   )
